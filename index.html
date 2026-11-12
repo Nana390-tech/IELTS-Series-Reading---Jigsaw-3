@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Amazing Brain · Jigsaw Reading</title>
+<style>
+:root{
+  --ink:#1B2240; --muted:#5D6482; --paper:#F7F8FD; --card:#FFFFFF; --line:#D9DDF0;
+  --A:#E8576E; --A-l:#FFE8EC; --B:#2B3F8C; --B-l:#E6EAF8; --AB:#0E9AA7; --AB-l:#DFF5F6;
+  --ok:#1E8A55; --ok-l:#E3F5EA; --bad:#C23B35; --bad-l:#FBE5E3;
+  --serif:Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Tahoma,Arial,sans-serif;font-size:19px;line-height:1.6;color:var(--ink);background:var(--paper);
+  background-image:radial-gradient(rgba(43,63,140,.10) 2px,transparent 2.5px);background-size:34px 34px}
+button{font:inherit;cursor:pointer;color:inherit}
+header{background:linear-gradient(135deg,#141B3D,#2B3F8C 70%,#3E2E7A);color:#fff;padding:20px 22px 0;position:relative;overflow:hidden}
+header h1{margin:0;font-family:var(--serif);font-size:30px;font-weight:700}
+header h1 .h{color:#FF9DAE}
+header p{margin:2px 0 14px;opacity:.9;font-size:17px}
+.combs{position:absolute;right:14px;top:6px;font-size:58px;opacity:.25;letter-spacing:-8px}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;max-width:1100px;margin:0 auto}
+nav.tabs button{border:0;border-radius:14px 14px 0 0;padding:10px 18px;font-weight:700;background:rgba(255,255,255,.14);color:#fff}
+nav.tabs button[aria-selected="true"]{background:var(--paper);color:var(--ink)}
+nav.tabs .dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:middle}
+main{max-width:1100px;margin:0 auto;padding:22px 18px 30px}
+.warn{border-radius:14px;padding:12px 16px;margin-bottom:16px;font-weight:600;display:flex;gap:10px;align-items:flex-start}
+.warn.A{background:var(--A-l);border:2px solid var(--A)}
+.warn.B{background:var(--B-l);border:2px solid var(--B)}
+.ar{direction:rtl;font-family:Tahoma,"Segoe UI",Arial,sans-serif;color:var(--B)}
+.grid{display:grid;grid-template-columns:1fr 290px;gap:20px;align-items:start}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+article.text{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:24px 28px;-webkit-user-select:text;user-select:text}
+article.text.A{border-top:10px solid var(--A)}
+article.text.B{border-top:10px solid var(--B)}
+article.text h2{font-family:var(--serif);font-size:28px;margin:0 0 4px}
+.lab{display:inline-block;font-size:14px;font-weight:800;border-radius:99px;padding:2px 12px;margin-bottom:6px;color:#fff}
+.lab.A{background:var(--A)}.lab.B{background:var(--B)}.lab.AB{background:var(--AB)}
+#paras p{font-size:20px;line-height:1.8;margin:0 0 16px}
+aside.side{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:18px;position:sticky;top:12px}
+aside.side h3{margin:0 0 8px;font-size:19px}
+.hlbar{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 6px}
+.pen{width:40px;height:40px;border-radius:50%;border:3px solid transparent;box-shadow:inset 0 0 0 2px rgba(0,0,0,.12)}
+.pen[aria-pressed="true"]{border-color:var(--ink)}
+.pen.y{background:#FFE58A}.pen.g{background:#BDEBC6}.pen.p{background:#F9C6D8}
+.pen.er{background:#fff;font-size:18px}
+.hlnote{font-size:14px;color:var(--muted);margin:0 0 6px}
+.clearhl{background:none;border:0;text-decoration:underline;font-size:14px;padding:0;margin:0 0 16px;color:var(--muted)}
+mark.hl{border-radius:3px;padding:0 1px;color:inherit}
+mark.hl.y{background:#FFE58A}mark.hl.g{background:#BDEBC6}mark.hl.p{background:#F9C6D8}
+body.erase #paras mark.hl{cursor:pointer;outline:1px dashed var(--bad)}
+.words{list-style:none;margin:0 0 16px;padding:0;font-size:16px}
+.words li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--line);padding:5px 0}
+.words b{color:var(--ink)}
+.btn{border:0;border-radius:12px;padding:12px 20px;font-weight:700;background:var(--B);color:#fff;box-shadow:0 3px 0 #141B3D}
+.btn.amber{background:var(--A);color:#fff;box-shadow:0 3px 0 #A63045}
+.btn.ghost{background:#fff;border:2px solid var(--line);box-shadow:none;color:var(--ink)}
+.btn:active{transform:translateY(2px);box-shadow:none}
+.full{width:100%}
+.team{display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:16px;margin-bottom:18px}
+@media(max-width:620px){.team{grid-template-columns:1fr}}
+.team h3{grid-column:1/-1;margin:0;font-size:19px}
+.team label{display:block;font-weight:700;font-size:15px;margin-bottom:4px}
+.team input{width:100%;border:2px solid var(--line);border-radius:10px;padding:9px 12px;font-size:18px;background:#fff}
+.team .a input{border-color:var(--A)}.team .b input{border-color:var(--B)}
+.sec{background:#fff;border:2px solid var(--line);border-radius:18px;padding:20px 22px}
+.sec h2{font-family:var(--serif);margin:0 0 4px;font-size:26px}
+.inst{color:var(--muted);margin:0 0 12px}
+.q{border:2px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0;background:#fff}
+.qh{display:flex;gap:10px;align-items:flex-start}
+.num{flex:none;width:34px;height:34px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px}
+.qt{font-weight:600;padding-top:3px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+@media(max-width:620px){.opts{grid-template-columns:1fr}}
+.opt{display:flex;gap:10px;align-items:center;text-align:left;border:2px solid var(--line);border-radius:12px;padding:9px 12px;background:#fff}
+.opt .lt{font-weight:800;color:var(--B);min-width:18px}
+.opt[aria-pressed="true"]{border-color:var(--B);background:var(--B-l)}
+.tfrow{display:flex;gap:8px;margin-top:10px}
+.tfrow .opt{flex:1;justify-content:center;font-weight:700;max-width:200px}
+.short{margin-top:10px;width:100%;max-width:420px;border:2px solid var(--line);border-radius:10px;padding:9px 12px;font-size:18px}
+.q.right{border-color:var(--ok);background:var(--ok-l)}
+.q.wrong{border-color:var(--bad);background:var(--bad-l)}
+.q.done .opt,.q.done .short{pointer-events:none}
+.opt.correct{border-color:var(--ok)!important;background:#fff!important;box-shadow:0 0 0 2px var(--ok) inset}
+.fb{margin-top:10px;font-size:16px}
+.src{display:inline-block;font-size:13px;font-weight:800;border-radius:99px;padding:1px 10px;color:#fff;margin-right:6px}
+.src.A{background:var(--A)}.src.B{background:var(--B)}.src.AB{background:var(--AB)}
+.row{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.res{background:#fff;border:2px solid var(--line);border-radius:18px;padding:22px}
+.big{font-size:60px;font-weight:900;font-family:var(--serif);line-height:1}
+.split{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+@media(max-width:620px){.split{grid-template-columns:1fr}}
+.sp{border-radius:14px;padding:14px;text-align:center;font-weight:700}
+.sp b{display:block;font-size:30px;font-family:var(--serif)}
+.sp.A{background:var(--A-l);border:2px solid var(--A)}.sp.B{background:var(--B-l);border:2px solid var(--B)}.sp.AB{background:var(--AB-l);border:2px solid var(--AB)}
+.cert{margin-top:20px;border:10px double var(--A);border-radius:20px;padding:34px 26px;text-align:center;background:linear-gradient(#fff,#EEF1FC);position:relative}
+.cert h4{font-family:var(--serif);font-size:36px;margin:4px 0 8px;color:var(--B)}
+.cert .nm{font-family:var(--serif);font-size:32px;font-weight:700;margin:10px 0;border-bottom:2px solid var(--A);display:inline-block;padding:0 20px}
+.seal{position:absolute;right:22px;top:22px;width:92px;height:92px;border-radius:50%;background:var(--A);color:#fff;font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2;transform:rotate(-10deg);box-shadow:0 0 0 5px #FFC2CC}
+@media(max-width:620px){.seal{display:none}}
+.empty{color:var(--muted);text-align:center;padding:30px}
+#toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,140%);background:var(--ink);color:#fff;padding:12px 20px;border-radius:14px;font-weight:600;transition:transform .3s;z-index:50;max-width:92vw;text-align:center}
+#toast.show{transform:translate(-50%,0)}
+canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:40}
+footer{text-align:center;color:var(--muted);font-size:15px;padding:10px 0 30px}
+@media print{
+  header,nav,.noprint,footer,#toast,canvas{display:none!important}
+  body{background:#fff}
+  .res{border:0;padding:0}
+  .cert{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="combs">✦ ☾ ✧</div>
+  <h1>🧠 Your <span class="h">Amazing</span> Brain</h1>
+  <p>A jigsaw reading for two · <span class="ar" style="color:#BFE9EE">قراءة تعاونية لطالبتين</span></p>
+  <nav class="tabs" role="tablist" id="tabs"></nav>
+</header>
+<main id="app"></main>
+<footer>Designed by: Nazila Motahari</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+<canvas id="cf"></canvas>
+<script>
+const D={"title": "Your Amazing Brain", "A": {"title": "Inside Your Brain", "paras": ["Your brain weighs about 1.4 kilograms, which is only about 2% of your body weight. But it is a very hungry organ. It uses about 20% of your body's energy, even when you are sitting still and resting.", "The brain contains about 86 billion nerve cells called neurons. Each neuron can connect with thousands of other neurons, so there are trillions of connections in your head. Messages travel along these connections as tiny electrical signals. When you repeat new information again and again, the connections become stronger. This is why practice helps you remember.", "Here is a strange fact: the brain itself cannot feel pain, because it has no pain receptors. For this reason, doctors can sometimes operate on a patient's brain while she is awake and talking. When you have a headache, the pain comes from the muscles, blood vessels and other parts around the brain.", "You may have heard that we only use 10% of our brain. This is a myth. Scientists say that we use all parts of the brain. Films such as Limitless have helped to keep this popular idea alive.", "Deep inside the brain is a small part called the hippocampus. Its name comes from the Greek word for \"seahorse\", because of its shape. The hippocampus works like an \"inbox\" for new memories. It holds new information for a short time before it is moved to long-term storage."], "gloss": [["organ", "عضو (في الجسم)"], ["energy", "طاقة"], ["nerve cell", "خلية عصبية"], ["connection", "اتصال / وصلة"], ["electrical signal", "إشارة كهربائية"], ["repeat", "يكرّر"], ["pain receptor", "مستقبِل الألم"], ["operate (on)", "يُجري عملية جراحية"], ["blood vessel", "وعاء دموي"], ["myth", "خرافة"], ["seahorse", "حصان البحر"], ["storage", "تخزين"]], "bonus": ["Did you know? In early childhood, the brain uses about half of the body's energy.", "Bonus: Which do you think is harder work for your brain, a maths test or a conversation in English? Why? Tell your partner."]}, "B": {"title": "What Your Brain Does at Night", "paras": ["Many people think that the brain switches off when we sleep. In fact, it stays very busy. Sleep happens in cycles of about 90 minutes. In one part of each cycle, called REM sleep, our eyes move quickly under our eyelids, and this is when most dreams happen. Everyone dreams, even people who say they never remember their dreams.", "One important job of sleep is cleaning. In 2013, a team of scientists led by Maiken Nedergaard in the USA studied mice and found that the brain has a special cleaning system. It was about ten times more active during sleep. While the mice slept, their brain cells became a little smaller, so fluid could flow between them and wash away waste.", "Sleep also helps memory. During deep sleep, the brain moves new memories from its short-term \"inbox\" to long-term storage, almost like pressing a \"save\" button. This also empties the inbox, so you are ready to learn new things the next day.", "So, is it a good idea to stay awake all night before an exam? Sleep scientist Matthew Walker tested this. Students who stayed awake all night were about 40% less able to make new memories than students who slept for eight hours.", "Experts at the National Sleep Foundation recommend 7 to 9 hours of sleep for young adults aged 18 to 25. It also helps to turn off screens before bed, because their light can make it harder to fall asleep."], "gloss": [["switch off", "يتوقف عن العمل"], ["cycle", "دورة"], ["eyelid", "جفن العين"], ["dream", "حُلم / يحلم"], ["mice", "فئران"], ["waste", "فضلات / نفايات"], ["fluid", "سائل"], ["memory", "ذاكرة / ذكرى"], ["save", "يحفظ"], ["stay awake", "يبقى مستيقظاً"], ["recommend", "يوصي بـ"], ["screen", "شاشة"]], "bonus": ["Did you know? Sleep scientists say you need sleep BEFORE learning too, to make your brain ready, like a dry sponge ready to soak up water.", "Bonus: How many hours do you usually sleep before an exam? Is it 7 to 9 hours? Tell your partner."]}, "Q": [{"type": "short", "src": "A", "q": "The brain weighs about ______ kilograms.", "a": "1.4", "accept": ["1.4", "1,4", "1.4 kg", "1.4 kilograms", "one point four"], "why": "Text A, paragraph 1."}, {"type": "tf", "src": "B", "q": "The brain switches off when we sleep.", "a": "False", "why": "It stays very busy during sleep (Text B, paragraph 1)."}, {"type": "mc", "src": "A", "q": "How much of the body's energy does the brain use?", "options": ["About 50%", "About 2%", "About 10%", "About 20%"], "a": 3, "why": "Text A, paragraph 1."}, {"type": "short", "src": "A+B", "q": "Every night, deep sleep empties the brain's memory \"inbox\" so you can learn again the next day. What is the name of this \"inbox\" part of the brain?", "a": "hippocampus", "accept": ["hippocampus", "the hippocampus", "hipocampus", "hippocampos"], "why": "Text B: sleep empties the inbox. Text A: the hippocampus works like an inbox for new memories."}, {"type": "short", "src": "B", "q": "One sleep cycle lasts about ______ minutes.", "a": "90", "accept": ["90", "ninety", "90 minutes"], "why": "Text B, paragraph 1."}, {"type": "tf", "src": "A", "q": "Each neuron can connect with only one other neuron.", "a": "False", "why": "Each neuron can connect with thousands of others (Text A, paragraph 2)."}, {"type": "mc", "src": "B", "q": "What happens during REM sleep?", "options": ["We stop breathing for a while", "Our eyes move quickly", "Our brain cells grow bigger", "We wake up every few minutes"], "a": 1, "why": "Text B, paragraph 1."}, {"type": "mc", "src": "A+B", "q": "Each text corrects a popular myth about the brain. Which two myths are they?", "options": ["We only use 10% of our brain / The brain switches off at night", "The brain can feel pain / Some people never dream at all", "We need 12 hours of sleep / Headaches come from the brain itself", "The brain is very heavy / Short naps are very bad for memory"], "a": 0, "why": "Text A: the 10% myth. Text B: the myth that the brain switches off during sleep."}, {"type": "tf", "src": "A", "q": "The brain itself can feel pain.", "a": "False", "why": "The brain has no pain receptors (Text A, paragraph 3)."}, {"type": "tf", "src": "B", "q": "People who don't remember their dreams don't dream at all.", "a": "False", "why": "Everyone dreams (Text B, paragraph 1)."}, {"type": "mc", "src": "A", "q": "Why can doctors sometimes operate on a patient's brain while she is awake?", "options": ["The brain is asleep during the day", "The brain has no pain receptors", "The patient takes a very long nap", "The brain only uses 10% of itself"], "a": 1, "why": "Text A, paragraph 3."}, {"type": "short", "src": "B", "q": "In which year did Maiken Nedergaard's team find the brain's cleaning system was more active during sleep?", "a": "2013", "accept": ["2013", "in 2013"], "why": "Text B, paragraph 2."}, {"type": "mc", "src": "A+B", "q": "You want to remember 20 new words for a test tomorrow. Using BOTH texts, which plan is best?", "options": ["Read the words once, then study for the whole night", "Stay awake all night so your brain does not switch off", "Practise the words once, then sleep for three hours", "Practise the words many times, then sleep 7 to 9 hours"], "a": 3, "why": "Text A: repeating information makes connections stronger. Text B: sleep saves new memories, and young adults need 7 to 9 hours."}, {"type": "tf", "src": "A", "q": "Scientists agree that we only use 10% of our brain.", "a": "False", "why": "It is a myth: we use all parts of the brain (Text A, paragraph 4)."}, {"type": "mc", "src": "B", "q": "In the study of mice, how much more active was the cleaning system during sleep?", "options": ["About two times", "About a hundred times", "About five times", "About ten times"], "a": 3, "why": "Text B, paragraph 2."}, {"type": "short", "src": "A", "q": "Which film is given as an example of keeping the 10% myth alive?", "a": "Limitless", "accept": ["limitless"], "why": "Text A, paragraph 4."}, {"type": "short", "src": "B", "q": "Students who stayed awake all night were about ______ % less able to make new memories.", "a": "40", "accept": ["40", "40%", "forty"], "why": "Text B, paragraph 4."}, {"type": "mc", "src": "A+B", "q": "During sleep, the brain's cleaning system washes away waste between the brain cells. About how many nerve cells are there in the brain?", "options": ["About 86 thousand", "About 86 million", "About 86 billion", "About 8.6 million"], "a": 2, "why": "Text B: the cleaning system works between brain cells. Text A: there are about 86 billion neurons."}, {"type": "mc", "src": "A", "q": "The hippocampus is named after a sea animal because of its shape. Which animal?", "options": ["A seahorse", "A starfish", "An octopus", "A crab"], "a": 0, "why": "Text A, paragraph 5."}, {"type": "mc", "src": "B", "q": "How much sleep do experts recommend for young adults aged 18 to 25?", "options": ["5 to 6 hours", "6 to 7 hours", "7 to 9 hours", "10 to 12 hours"], "a": 2, "why": "Text B, paragraph 5."}], "sources": [["Brain: 2% of body weight, 20% of energy, 86 billion neurons (Australian Academy of Science)", "https://www.science.org.au/curious/node/278"], ["The human brain as a scaled-up primate brain (Herculano-Houzel, PNAS 2012)", "https://pubmed.ncbi.nlm.nih.gov/22723358/"], ["Why doesn't the brain have pain receptors? (BrainFacts.org)", "https://brainfacts.org/thinking-sensing-and-behaving/pain/2021/why-doesnt-the-brain-have-nociceptors-020321"], ["Why do we only use 10 percent of the brain? The myth and Limitless (Psychology Today)", "https://psychologytoday.com/us/blog/modern-minds/201803/why-do-we-only-use-10-percent-the-brain"], ["Brain may flush out toxins during sleep (NIH, 2013)", "https://www.nih.gov/news-events/news-releases/brain-may-flush-out-toxins-during-sleep"], ["To sleep, perchance to clean (University of Rochester, 2013)", "https://www.urmc.rochester.edu/news./story/to-sleep-perchance-to-clean"], ["Sleep deprivation and a 40% learning deficit (Matthew Walker, FoundMyFitness)", "https://www.foundmyfitness.com/episodes/sleep-deprivation-decrease-in-learning"], ["Why is sleep important? NSF hours, dreams, screens (Psychology Today)", "https://www.psychologytoday.com/us/basics/sleep"]]};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const LET="abcd";
+const S={tab:"A",nA:"",nB:"",ans:{},checked:false,pen:"y",hl:{A:null,B:null}};
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),2800)}
+const T=[["A","Student A","var(--A)"],["B","Student B","#9FB2F2"],["Q","Questions","var(--AB)"],["R","My result","#fff"]];
+
+function tabs(){
+  $("#tabs").innerHTML=T.map(([k,l,c])=>`<button role="tab" aria-selected="${S.tab===k}" data-tab="${k}"><span class="dot" style="background:${c}"></span>${l}</button>`).join("");
+  document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{saveHL();S.tab=b.dataset.tab;render();window.scrollTo({top:0})});
+}
+
+/* ---------- text tabs ---------- */
+function textTab(r){
+  const P=D[r],other=r==="A"?"B":"A";
+  return `<div class="warn ${r}">⚠️ <div>This is <b>Student ${r}'s</b> text. Student ${other}: please don't read this tab! Your partner will tell you about it.
+     <div class="ar">هذا نص الطالبة ${r==="A"?"أ":"ب"}. الطالبة ${r==="A"?"ب":"أ"}: لا تقرئي هذه الصفحة!</div></div></div>
+  <div class="grid">
+   <article class="text ${r}"><span class="lab ${r}">TEXT ${r}</span><h2>${esc(P.title)}</h2>
+    <div id="paras">${S.hl[r]||P.paras.map(p=>`<p>${esc(p)}</p>`).join("")}</div>
+   </article>
+   <aside class="side"><h3>🖍️ Highlighter</h3>
+    <div class="hlbar" role="group" aria-label="Highlighter">${[["y","Yellow"],["g","Green"],["p","Pink"]].map(([k,l])=>`<button class="pen ${k}" data-pen="${k}" aria-pressed="${S.pen===k}" aria-label="${l} highlighter" title="${l}"></button>`).join("")}<button class="pen er" data-pen="er" aria-pressed="${S.pen==="er"}" aria-label="Eraser" title="Eraser: tap a highlight to remove it">⌫</button></div>
+    <p class="hlnote">Choose a colour, then select words in the text. Use ⌫ and tap a highlight to remove it.</p>
+    <button class="clearhl" id="clr">Clear all my highlights</button>
+    <h3>📖 Word help</h3>
+    <ul class="words">${P.gloss.map(([w,a])=>`<li><b>${esc(w)}</b><span class="ar">${esc(a)}</span></li>`).join("")}</ul>
+    <button class="btn full" id="toQ">Go to the questions →</button>
+   </aside>
+  </div>`;
+}
+function bindText(r){
+  const box=$("#paras");
+  document.body.classList.toggle("erase",S.pen==="er");
+  document.querySelectorAll("[data-pen]").forEach(b=>b.onclick=()=>{S.pen=b.dataset.pen;document.querySelectorAll("[data-pen]").forEach(x=>x.setAttribute("aria-pressed",x===b));document.body.classList.toggle("erase",S.pen==="er")});
+  $("#clr").onclick=()=>{box.querySelectorAll("mark.hl").forEach(unwrap);saveHL();toast("All highlights cleared")};
+  $("#toQ").onclick=()=>{saveHL();S.tab="Q";render();window.scrollTo({top:0})};
+  const doHL=()=>{
+    if(S.pen==="er")return;
+    const sel=getSelection();if(!sel.rangeCount||sel.isCollapsed)return;
+    const rg=sel.getRangeAt(0);if(!box.contains(rg.commonAncestorContainer))return;
+    if(rg.startContainer.nodeType===3){let o=rg.startOffset;const t=rg.startContainer.nodeValue;while(o>0&&/[A-Za-z0-9'’]/.test(t[o-1]))o--;rg.setStart(rg.startContainer,o)}
+    if(rg.endContainer.nodeType===3){let o=rg.endOffset;const t=rg.endContainer.nodeValue;while(o<t.length&&/[A-Za-z0-9'’]/.test(t[o]))o++;rg.setEnd(rg.endContainer,o)}
+    const pOf=n=>(n.nodeType===3?n.parentNode:n).closest("p");
+    const p1=pOf(rg.startContainer),p2=pOf(rg.endContainer);
+    if(!p1||p1!==p2){sel.removeAllRanges();return toast("Please highlight inside one paragraph at a time.")}
+    if(!rg.toString().trim()){sel.removeAllRanges();return}
+    const m=document.createElement("mark");m.className="hl "+S.pen;
+    m.appendChild(rg.extractContents());
+    m.querySelectorAll("mark.hl").forEach(unwrap);
+    rg.insertNode(m);sel.removeAllRanges();box.normalize();saveHL();
+  };
+  box.addEventListener("mouseup",()=>setTimeout(doHL,0));
+  box.addEventListener("touchend",()=>setTimeout(doHL,300));
+  box.addEventListener("click",e=>{const m=e.target.closest("mark.hl");if(S.pen==="er"&&m){unwrap(m);box.normalize();saveHL()}});
+}
+function unwrap(m){const p=m.parentNode;while(m.firstChild)p.insertBefore(m.firstChild,m);p.removeChild(m)}
+function saveHL(){const b=$("#paras");if(b&&(S.tab==="A"||S.tab==="B"))S.hl[S.tab]=b.innerHTML}
+
+/* ---------- questions ---------- */
+function teamBox(){return `<div class="team"><h3>👭 Our team</h3>
+  <div class="a"><label for="nA">Student A's name</label><input type="text" id="nA" value="${esc(S.nA)}" autocomplete="off" placeholder="Type a name"></div>
+  <div class="b"><label for="nB">Student B's name</label><input type="text" id="nB" value="${esc(S.nB)}" autocomplete="off" placeholder="Type a name"></div></div>`}
+function srcTag(s){const k=s==="A+B"?"AB":s;return `<span class="src ${k}">${s==="A+B"?"Both texts":"Text "+s}</span>`}
+function questionsTab(){
+  return teamBox()+`<section class="sec"><span class="lab AB">WORK WITH YOUR PARTNER</span><h2>Brain questions</h2>
+   <p class="inst">Answer all 20 questions together. Some answers are in your text, some are in your partner's text, and some need <b>both</b> texts. Talk to each other, but don't show your screen! <span class="ar">أجيبا معاً، ولا تُريا الشاشة لبعضكما!</span></p>
+   ${D.Q.map((q,i)=>{
+     const a=S.ans[i];let body="";
+     if(q.type==="tf")body=`<div class="tfrow">${["True","False"].map(v=>`<button class="opt" data-q="${i}" data-v="${v}" aria-pressed="${a===v}">${v}</button>`).join("")}</div>`;
+     if(q.type==="mc")body=`<div class="opts">${q.options.map((o,j)=>`<button class="opt" data-q="${i}" data-v="${j}" aria-pressed="${a===String(j)}"><span class="lt">${LET[j]}</span>${esc(o)}</button>`).join("")}</div>`;
+     if(q.type==="short")body=`<input class="short" data-q="${i}" value="${esc(a||"")}" autocomplete="off" placeholder="Type your answer">`;
+     return `<div class="q" id="q${i}"><div class="qh"><span class="num">${i+1}</span><div class="qt">${esc(q.q)}</div></div>${body}<div class="fb"></div></div>`;
+   }).join("")}
+   <div class="row noprint"><button class="btn" id="ck">✔ Check our answers</button>${S.checked?`<button class="btn ghost" id="again">↺ Try again</button>`:""}</div>
+  </section>`;
+}
+function norm(s){return String(s||"").trim().toLowerCase().replace(/[.!?"]/g,"").replace(/\s+/g," ")}
+function right(i){const q=D.Q[i],a=S.ans[i];if(a==null||a==="")return false;
+  if(q.type==="tf")return a===q.a; if(q.type==="mc")return +a===q.a;
+  return q.accept.includes(norm(a))}
+function score(){const m={A:[0,0],B:[0,0],"A+B":[0,0]};D.Q.forEach((q,i)=>{m[q.src][1]++;if(right(i))m[q.src][0]++});const tot=D.Q.filter((q,i)=>right(i)).length;return {m,tot,max:D.Q.length}}
+function markAll(){
+  D.Q.forEach((q,i)=>{const c=$("#q"+i),ok=right(i);c.classList.add("done");c.classList.toggle("right",ok);c.classList.toggle("wrong",!ok);
+    if(q.type==="tf")c.querySelector(`[data-v="${q.a}"]`).classList.add("correct");
+    if(q.type==="mc")c.querySelector(`[data-v="${q.a}"]`).classList.add("correct");
+    const ans=q.type==="mc"?`${LET[q.a]}) ${q.options[q.a]}`:q.a;
+    c.querySelector(".fb").innerHTML=`${srcTag(q.src)}${ok?"✅ <b>Correct!</b> ":`❌ <b>Answer:</b> ${esc(ans)}. `}${esc(q.why)}`;
+  });
+}
+function bindQ(){
+  const nA=$("#nA"),nB=$("#nB");
+  nA.oninput=()=>{S.nA=nA.value;const c=$("#cA");if(c)c.textContent=S.nA||"Student A"};
+  nB.oninput=()=>{S.nB=nB.value;const c=$("#cB");if(c)c.textContent=S.nB||"Student B"};
+  document.querySelectorAll(".opt[data-q]").forEach(b=>b.onclick=()=>{if(S.checked)return;const i=b.dataset.q;S.ans[i]=b.dataset.v;b.parentNode.querySelectorAll(".opt").forEach(x=>x.setAttribute("aria-pressed",x===b))});
+  document.querySelectorAll(".short").forEach(inp=>inp.oninput=()=>{S.ans[inp.dataset.q]=inp.value});
+  if(S.checked)markAll();
+  $("#ck").onclick=()=>{
+    if(S.checked){S.tab="R";render();return}
+    if(!S.nA.trim()||!S.nB.trim()){toast("Write both team names at the top first.");(!S.nA.trim()?nA:nB).focus();window.scrollTo({top:0,behavior:"smooth"});return}
+    const miss=D.Q.map((q,i)=>(S.ans[i]==null||String(S.ans[i]).trim()==="")?i+1:0).filter(Boolean);
+    if(miss.length){toast("Please answer every question. Missing: "+miss.join(", "));return}
+    S.checked=true;markAll();
+    $("#ck").textContent="See our result →";
+    const sc=score();toast(`You scored ${sc.tot} / ${sc.max}! Scroll to see the answers, or open My result.`);
+    if(sc.tot>=Math.ceil(sc.max*.8))confetti();
+  };
+  const ag=$("#again");if(ag)ag.onclick=()=>{S.ans={};S.checked=false;render();toast("Answers cleared. Try again together!")};
+}
+
+/* ---------- result ---------- */
+function resultTab(){
+  if(!S.checked)return `<div class="res empty">Answer the questions with your partner and press <b>Check our answers</b> first. 🧠</div>`;
+  const m=score(),pass=m.tot>=Math.ceil(m.max*.8);
+  return `<div class="res"><div class="row" style="margin-top:0;align-items:center"><div class="big">${m.tot} / ${m.max}</div>
+   <div><b style="font-size:22px">${pass?"Fantastic teamwork! 🧠":"Good effort! 💡"}</b><br>${pass?"You shared your information well and helped each other.":"You need 16 / 20 for the team certificate. Go back to the Questions tab, look at the answers, then press Try again."}</div></div>
+   <div class="split">
+    <div class="sp A">Text A questions<b>${m.m.A[0]} / ${m.m.A[1]}</b></div>
+    <div class="sp B">Text B questions<b>${m.m.B[0]} / ${m.m.B[1]}</b></div>
+    <div class="sp AB">Both texts<b>${m.m["A+B"][0]} / ${m.m["A+B"][1]}</b></div>
+   </div>
+   <p class="inst">Tip: if one text has a low score, the answers in that text were not explained clearly enough. Read that text together now.</p>
+   ${pass?`<div class="noprint">${teamBox()}</div>
+   <div class="cert"><div class="seal">TEAM<br>READERS<br>🧠</div><div style="font-size:42px">🧠 💡 🌙</div><h4>Team Certificate</h4><div>This certifies that</div>
+    <div class="nm"><span id="cA">${esc(S.nA)||"Student A"}</span> &amp; <span id="cB">${esc(S.nB)||"Student B"}</span></div>
+    <div>worked together as a team to complete the jigsaw reading <i>Your Amazing Brain</i>,<br>sharing information and helping each other, with a score of <b>${m.tot} / ${m.max}</b>.</div>
+    <div style="margin-top:8px">${new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})}</div>
+    <div style="margin-top:14px;font-family:var(--serif);font-style:italic">Designed by: Nazila Motahari · Higher Colleges of Technology</div></div>
+   <div class="row noprint"><button class="btn amber" id="pr">🖨️ Print / Save as PDF</button></div>`:""}
+  </div>`;
+}
+function bindR(){
+  const pr=$("#pr");if(pr)pr.onclick=()=>window.print();
+  const nA=$("#nA"),nB=$("#nB");
+  if(nA)nA.oninput=()=>{S.nA=nA.value;$("#cA").textContent=S.nA||"Student A"};
+  if(nB)nB.oninput=()=>{S.nB=nB.value;$("#cB").textContent=S.nB||"Student B"};
+  if(S.checked&&score().tot>=16)confetti();
+}
+
+function render(){
+  tabs();const A=$("#app");
+  if(S.tab==="A"||S.tab==="B"){A.innerHTML=textTab(S.tab);bindText(S.tab)}
+  else{document.body.classList.remove("erase");
+    if(S.tab==="Q"){A.innerHTML=questionsTab();bindQ()}
+    else{A.innerHTML=resultTab();bindR()}}
+}
+function confetti(){
+  const c=$("#cf"),x=c.getContext("2d");c.width=innerWidth;c.height=innerHeight;
+  const col=["#E8576E","#FF9DAE","#2B3F8C","#0E9AA7","#FFD166"];
+  const P=Array.from({length:160},()=>({x:Math.random()*c.width,y:-Math.random()*c.height*.6,r:5+Math.random()*6,c:col[Math.random()*5|0],v:2+Math.random()*3,h:-1.5+Math.random()*3,a:Math.random()*6}));
+  let f=0;(function t(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.y+=p.v;p.x+=p.h;p.a+=.1;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.5);x.restore()});if(++f<220)requestAnimationFrame(t);else x.clearRect(0,0,c.width,c.height)})();
+}
+render();
+</script>
+</body>
+</html>
